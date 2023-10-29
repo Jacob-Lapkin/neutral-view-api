@@ -1,0 +1,74 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+venv/
+*.venv
+*.virtenv
+.env
+.venv/
+ENV/
+
+# Flask specific
+instance/
+.webassets-cache
+
+# PyCharm, VSCode, and other IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Databases
+*.sqlite
+
+# Logs
+logs/
+*.log
+
+# OS generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Others
+*.pid
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.bak
+*.tar
+*.zip
+*.dmg
+*.iso
+*.vdi
+*.vmdk
+*.img
+
+# Directories
+tmp/
+temp/
+obj/
+external/
+uploads/
+
+# Eclipse
+*.pydevproject
+.project
+.metadata
+
+# Rope
+.ropeproject

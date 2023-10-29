@@ -1,0 +1,119 @@
+openapi: 3.0.0
+info:
+  title: Neutral View API
+  version: 1.0.0
+  description: API for fact verification platform "Neutral View".
+
+paths:
+
+  /auth/register:
+    post:
+      summary: Register a new user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: User registered successfully.
+        '400':
+          description: Bad request or user already exists.
+
+  /auth/login:
+    post:
+      summary: Authenticate user and return JWT.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Login successful.
+        '401':
+          description: Unauthorized or invalid credentials.
+
+  /auth/token/validate:
+    get:
+      summary: Check if a JWT is valid.
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Token is valid.
+        '401':
+          description: Invalid or expired token.
+
+  /auth/token/refresh:
+    get:
+      summary: Obtain a new token using the refresh token.
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: New token issued.
+        '401':
+          description: Invalid refresh token.
+
+  /claims:
+    get:
+      summary: Retrieve claims.
+      responses:
+        '200':
+          description: List of claims.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Claim'
+    post:
+      summary: Submit a new claim.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Claim'
+      responses:
+        '201':
+          description: Claim submitted successfully.
+        '400':
+          description: Bad request.
+
+components:
+  schemas:
+    Claim:
+      type: object
+      properties:
+        id:
+          type: string
+        content:
+          type: string
+        dateSubmitted:
+          type: string
+          format: date-time
+        score:
+          type: number
+
