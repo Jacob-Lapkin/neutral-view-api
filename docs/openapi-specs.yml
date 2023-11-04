@@ -75,45 +75,76 @@ paths:
           description: New token issued.
         '401':
           description: Invalid refresh token.
-
   /claims:
     get:
       summary: Retrieve claims.
       responses:
         '200':
-          description: List of claims.
+          description: List of claims retrieved successfully.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Claim'
+                  $ref: '#/components/schemas/ClaimResponse'
     post:
-      summary: Submit a new claim.
+      summary: Submit a new claim for analysis.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Claim'
+              required:
+                - claim
+              properties:
+                claim:
+                  type: string
       responses:
-        '201':
-          description: Claim submitted successfully.
+        '200':
+          description: Claim submitted and analyzed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClaimSubmitResponse'
         '400':
-          description: Bad request.
+          description: Bad request, claim data is required.
 
 components:
   schemas:
-    Claim:
+    ClaimResponse:
       type: object
       properties:
-        id:
+        claim:
           type: string
-        content:
+        claimUsage:
+          $ref: '#/components/schemas/ClaimUsage'
+        claimData:
+          $ref: '#/components/schemas/ClaimData'
+        claimId:
           type: string
-        dateSubmitted:
+    ClaimSubmitResponse:
+      type: object
+      properties:
+        status:
           type: string
-          format: date-time
-        score:
+        claimResponse:
+          $ref: '#/components/schemas/ClaimResponse'
+    ClaimUsage:
+      type: object
+      properties:
+        totalCost:
           type: number
-
+        totalTokens:
+          type: number
+    ClaimData:
+      type: object
+      properties:
+        factScore:
+          type: integer
+          format: int32
+        explanation:
+          type: string
+        icon:
+          type: string
+        sourceUrl:
+          type: string

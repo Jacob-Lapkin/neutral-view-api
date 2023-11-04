@@ -47,14 +47,14 @@ def create_app(mode):
         access_token_url='https://accounts.google.com/o/oauth2/token',
         access_token_params=None,
         refresh_token_url=None,
-        redirect_to='google_login',
-        client_kwargs={'scope': 'openid profile email'},
+        client_kwargs={'scope': 'profile email'},
+        server_metadata_url= 'https://accounts.google.com/.well-known/openid-configuration'
     )
     
     app.google = google
 
     # register blueprints
-    app.register_blueprint(parent_bp, url_prefix="/v1")
+    app.register_blueprint(parent_bp, url_prefix=f'/{app.config["VERSION"]}')
 
     @app.route('/test', methods=["POST", "GET"])
     def test():
